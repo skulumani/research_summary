@@ -3,7 +3,7 @@
 \documentclass[11pt,professionalfonts]{beamer}
 \usefonttheme{serif}
 \usepackage{presentation_packages}
-\usepackage{multimedia}
+\usepackage{animate} % for animated gif
 
 \newcommand{\hilight}[1]{\colorbox{green}{#1}}
 
@@ -452,7 +452,7 @@
 			\item Unwinding behavior 
 		\end{itemize}
 		\pause
-		\item Geometric approach
+		\item Geometric control
 		\begin{itemize}
 			\item Globally and uniquely characterize attitude: \( R \in \SO \)
 			\item Singular representation of attitude 
@@ -462,55 +462,63 @@
 	
 \end{frame}
 
-\subsection{Research Objectives}
+\subsection{Research}
 
 \begin{frame}{Research Objectives}
 \begin{itemize}
 	\item Attitude manuevers with state inequality constraints
-	\item Allows for mathematically rigourous stability guarantees
-	\item Barrier function augmented with error function
+	\item Barrier function approach on \( \SO \) 
+	\begin{itemize}
+		\item Aggressive, global manuevers free from singularities
+	\end{itemize}
+	\item Mathematically rigorous stability guarantee
 \end{itemize}
 \end{frame}
 
 \begin{frame} %-----------------------------%
 \frametitle{Attitude dynamics} 
 \begin{itemize}
-	\item Globally defined attitude stabilization in the presence of pointing constraints
-	\item Configuration space: special orthogonal group 
 
+	\item Configuration space: rotation matrix from body frame to inertial frame
+	 \[\SO =  \{R\in\R^{3\times 3}\,|\, R^TR=I,\;\mathrm{det}[R]=1\} \]
+	\item Rigid body attitude dynamics:
 \begin{gather*}
-	J\dot\Omega + \Omega\times J\Omega = u+W(R,\Omega)\Delta ,\label{eqn:Wdot}\\
-	\dot R = R\hat\Omega ,\label{eqn:Rdot}
+	J\dot\Omega + \Omega\times J\Omega = u+W(R,\Omega)\Delta \\
+	\dot R = R\hat\Omega 
 \end{gather*}
-	\begin{itemize}
-		\item Avoids singularities of locally defined Euler angles
-		\item Avoids double coverage ambiguity of Quaternion
-	\end{itemize}
-
 \end{itemize}
 
 \end{frame}   %-----------------------------%
 
+\begin{frame}{Constraints} %-------------------------------------------%
+	\begin{itemize}
+		\item Body fixed vector \( r \in \S^2\) - a light sensitive optical sensor
+		\item Inertially fixed vector \( v \in \S^2 \) - bright object 
+		\item Hard cone constraint:
+		\[
+			r^T R^T v \leq \cos \theta
+		\]
+	\end{itemize}
+	\pause
+	\begin{block}{Control Design Goal}
+		Design control input \( u \) that stabilizes system from initial attitude \( R_0 \) to desired attitude \( R_d \) while satisfying constraint.
+	\end{block}
+\end{frame}%-------------------------------------%
 
-\begin{frame}
+\begin{frame}%-----------------------------------------------------%
 \frametitle{Configuration Error Function}
-		\begin{itemize}
-			\item Body fixed vector \( r \) - a light sensitive optical sensor
-			\item Inertially fixed vector \( v \) - bright object or debris direction
-		\end{itemize}
-		
-	Configuration error function used to quantify attitude error
-        \begin{align*}
+\begin{itemize}
+	\item Configuration error function used to quantify attitude error
+        \[
         	\Psi(R) = A(R) B(R) 
-        	\label{eq:error_function}
-        \end{align*}
-	Combination of attractive and repulsive terms   
-        \begin{align*}
-        	A(R) &= \frac{1}{2} \tr{G \left( I - R_d^T R\right)} \\
-        	B_i(R) &= 1 - \frac{1}{\alpha_i} \ln \left( - \frac{ r^T R^T v_i - \cos \theta_i}{1 + \cos \theta_i}\right)
-        \end{align*} 
-
-
+        \]
+	\item Combination of attractive and repulsive terms   
+        \begin{gather*}
+        	A(R) = \frac{1}{2} \tr{G \left( I - R_d^T R\right)} \\
+        	B_i(R) = 1 - \frac{1}{\alpha_i} \ln \left( - \frac{ r^T R^T v_i - \cos \theta_i}{1 + \cos \theta_i}\right)
+        \end{gather*}
+\end{itemize}
+\visible<2->{
 \begin{figure} 
 	\centering 	
 	\begin{subfigure}[b]{0.3\textwidth} 
@@ -523,24 +531,37 @@
 		\includegraphics[width=\textwidth]{combined_error}
 	\end{subfigure}
 \end{figure}
-\end{frame}
+}
+\end{frame} %---------------------------------------------------%
 
-\begin{frame}{Controller Design}
-	Lyapunov analysis on configuration space
-	
-			\begin{align*}
-			u = - k_R e_R - k_{\Omega} e_{\Omega} + \Omega \times J \Omega + J \alpha_d
+\begin{frame}{Controller Design} %--------------------------------------------%
+	\begin{block}{Adaptive Attitude Controller}
+		Zero equilibrium of error vectors are Lyapunov stable, furthermore \( e_R , e_\Omega \to 0 \) as \( t \to \infty \)
+		\begin{align*}
+			u &= - k_R e_R - k_{\Omega} e_{\Omega} + \Omega \times J \Omega - W \bar{\Delta} \\
+			\dot{\bar{\Delta}} &= k_\Delta W^T \parenth{ e_\Omega + c e_R }
 		\end{align*}
-		
-\end{frame}
+	\end{block}
+\end{frame}%--------------------------------------------------------------%
 
 \subsection{Simulation results}
+
 \begin{frame}{Simulation} %---------------------------------------------%
 \begin{itemize}
-	\item 4 constrained regions shown as red cones
-\end{itemize}
-
+	\item Can easily handle multiple constraints
+	\item \href{https://youtu.be/dsmAbwQram4?t=20s}{UAV Experiment}
+	\item Several benefits over previous methods:
+		\begin{itemize}
+			\item Avoids attitude parameterizations
+			\item Efficient - feedback form
+			\item Stability guarantee in spite of disturbances
+		\end{itemize}
+\end{itemize} 
+\animategraphics[autoplay,loop,width=0.45\textwidth]{12}{./animation/sc_avoid_nodist/sc_avoid_nodist-}{0}{99}
+\animategraphics[autoplay,loop,width=0.45\textwidth]{12}{./animation/sc_avoid_mult/sc_avoid_mult-}{0}{99}
 \end{frame}%--------------------------------------------------%
+
+
 
 \end{document}
 
