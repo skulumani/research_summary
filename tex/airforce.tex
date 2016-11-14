@@ -104,13 +104,19 @@
 
 \subsection[Space TDOA]{Space based geolocation using TDOA}
 
-\begin{frame}[t]\frametitle{Space Geolocation}
+\begin{frame}[t]\frametitle{Geolocation}
     \begin{itemize}
-        \item Background of geolocation (tri lateration)
-        \item Locate signals on the Earth from a constellation of small/cheap satellites
-        \item Regenerate some plots from GUI
+        \item Variety of possible localization methods
+        \begin{itemize}
+            \item \Emph{Multilateration} - time/range differences between transmitter and receiver (LORAN-C)
+            \item \Emph{Trilateration} - range measurements between transmitter and receiver (GPS)
+            \item \Emph{Triangulation} - angular/bearing measurements to known transmitter locations (land navigation)
+        \end{itemize}
     \end{itemize}
 
+    \begin{block}{Space Based Time Difference of Arrival Localization}
+        Determine the position of a transmitter based on measurements from a constellation of satellites
+    \end{block}
 \end{frame}
 
 \begin{frame}[t]{Time Difference of Arrival}
