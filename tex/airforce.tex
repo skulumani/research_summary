@@ -119,20 +119,23 @@
     \end{block}
 \end{frame}
 
-\begin{frame}[t]{Time Difference of Arrival}
+\begin{frame}[t]{TDOA - Time Difference of Arrival}
     \begin{itemize}
-        \item What is TDOA
-        \item Intersection of hyperbolas
-        \item Can be formulated as an explicit algebraic equation
-        \item Also possible to use iterative methods to solve
-        \item Also I formulated a solution using an EKF
+        \item The arrival time of a signal at differing reciever stations
+        \begin{itemize}
+            \item TDOA/RDOA - time difference \( \equiv \) range difference
+        \end{itemize}
+        \item Locus of possible transmitter positions defines a hyperbola 
+        \begin{itemize}
+            \item Constant range difference between pairs of stations located at the foci
+            \item Given 4 receivers and the surface of the Earth we can uniquely locate the transmitter
+            \item Algebraic as well as iterative/recursive based approaches investigated
+        \end{itemize}
     \end{itemize}
-\end{frame}
 
-\begin{frame}[t]\frametitle{Simulation}
-    
-\begin{itemize}
-    \item Accuracy of solution dependent on constellation design
-    \item Lots of students at AFIT have looked at system design and improving this method
-\end{itemize}
+    \begin{center}
+        \only<1>{\includegraphics[width=0.5\textwidth,height=0.5\textheight,keepaspectratio]{figures/airforce/tdoa_curves_globe.pdf}~
+        \includegraphics[width=0.5\textwidth,height=0.5\textheight,keepaspectratio]{figures/airforce/hyperbola.png}}
+        \only<2>{\includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{figures/airforce/tdoa_curves_mercator.pdf}}
+    \end{center}
 \end{frame}
