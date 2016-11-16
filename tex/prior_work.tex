@@ -1,6 +1,5 @@
-% !TEX Root = ../proposal.tex
+% !TEX Root = ../presentation.tex
 
-\section[Prior Research]{Research into spacecraft mission design}
 \subsection[Reachability Sets]{Orbital transfers via Reachability Sets}
 
 \begin{frame}{Orbital Transfers} % -----------------------------------%
@@ -21,12 +20,13 @@
     \end{itemize}
 
   \note[itemize]{
+    \item here we introduce some of our previous work that aims to apply geometric mechanics to the design of trajectories around asteroids
     \item Reachability set avoids the need to pick initial conditions
     \item We compute on a lower dimensional surface
   }
 \end{frame} %--------------------------------------%
 
-\subsubsection[Dynamic Systems Theory Review]{Dynamic Systems}
+\subsubsection[Dynamic Systems Theory]{Dynamic Systems}
 
 \begin{frame}{\Poincare map}
 \begin{itemize}
@@ -91,6 +91,13 @@
     \end{scaletikzpicturetowidth}
 \end{center}
 
+\note[itemize]{
+    \item Here we present a review of the key components of dynamical systems theory
+    \item we start with some initial condition \( \vecbf{x}_0\) on a periodic orbit
+    \item we then define a section \( \Sigma \) transverse to this flow
+    \item we can use the successive iterations of these periodic orbits to study the dynamics of the system on a lower dimensional surface.
+    \item Periodic orbits show up as fixed points while sinks/sources will have a distinctly different behavior
+}
 \end{frame}
 
 \begin{frame}{Reachability Set}
@@ -121,7 +128,7 @@
       poincare/.style={opacity=.2,very thick,fill=blue},
       orbit/.style={very thick,black},
       orbit hidden/.style={very thick,dashed},
-      grid/.style={very thin,gray},
+      grid/.style={very thin,black},
       axis/.style={->,blue,thick},
       reachability/.style={thick,blue}]
 
@@ -145,9 +152,13 @@
     % draw a periodic orbit
     \coordinate (center) at (0,0,2);
     \node[] (x0) at (0,3,2) {};
-    \onslide<3-5>{
+    \onslide<3>{
         \node[label=left:\(\vecbf{x}_0\)] at (x0) {};
+        
+    }
+    \onslide<4->{
         \filldraw (x0) circle (3pt);
+        \node[label=below:\(\vecbf{x}_n\)] at (x0) {};
     }
 
     \onslide<4-5>{
@@ -165,28 +176,37 @@
         \tdplotdrawarc[tdplot_rotated_coords,grid]{(x0)}{0.5}{-45}{90}{above}{\(\phi\)};
         }
 
-    % draw terminal state on reachability set
+
+   % draw terminal state on reachability set
     \onslide<6->{
         \node[tdplot_rotated_coords,label=above:\(\vecbf{x}_f\)] (xf) at ($ (x0)+(-45:1.5) $) {};
         \filldraw (xf) circle (3pt);
-        \node[label=below:\(\vecbf{x}_n\)] at (x0) {};
         }
-    
+
     \onslide<7->{
         \node[tdplot_rotated_coords,label=below:\(J\)] at (xf) {};
         }
 
     \onslide<8->{
-        
         \tdplotdrawarc[tdplot_rotated_coords,reachability]{(x0)}{1.5}{0}{360}{}{};
     }
     
 \end{tikzpicture}
 \end{center}
 
+\note[itemize]{
+    \item We combine both reachability and the \Poincare section to design transfers
+    \item again we define our section \( \Sigma\)
+    \item choose an initial state that is on \( \Sigma \)
+    \item propogate without any control input from \( \vecbf{x}_0 \) to \( \vecbf{x}_n\)
+    \item by adding the control input the terminal state will be something different at \( \vecbf{x}_f\)
+    \item we define the distance between \( \vecbf{x}_n\) and \(\vecbf{x}_f\) with \( J \) - want to maximize this
+    \item Repeat this computation many times for a variety of angles \( \phi\)
+}
 \end{frame} %--------------------------------------%
 
-\subsection[Formulating the optimal control problem]{Optimal Control Problem}
+
+\subsection[Optimal Control]{Formulating the optimal control problem}
 
 \begin{frame}{Optimal Control Problem}
 \begin{itemize}
@@ -210,9 +230,9 @@
 
 \begin{frame}{Shooting Method}
 \begin{itemize}
-    \item Shooting method used to solve two-point boundary value problem
-    \item Convergence and numerical stability is difficult over long time horizons
-    \item Multiple shooting sub-divides the interval into shorter segments
+    \item Shooting method used to solve boundary value problem
+    \item Convergence is difficult with with single shooting
+    \item<6-> Multiple shooting sub-divides the total interval
 \end{itemize}
 
 \only<2-5>{
@@ -320,7 +340,14 @@
 \end{tikzpicture}
 \end{scaletikzpicturetowidth}
 }
-
+\note[itemize]{
+    \item The euler lagrange equations transforms from an optimal control problem to a two point boundary value problem
+    \item in the shooting method we try to choose initial conditions \( \vecbf{\lambda}_0\) to satisfy some set of terminal conditions
+    \item Again it's prone to sensitivty so we instead use a multiple shooting method 
+    \item We divide the time interval into smaller sub segments and add additional interior constraints to ensure a continuous trajectory
+    \item Each sub stage is then a smaller single shooting approach
+    \item this ends up reducing the sensitivity of the terminal states to variations of the intial conditions
+}
 \end{frame}
 
 \begin{frame}{Solving the Optimal Control Problem}
@@ -343,7 +370,7 @@
 \end{frame}
 
 % results from 2015 AAS
-\subsection[Transfer examples using Reachability Sets]{Transfer Examples}
+\subsection[Transfer examples]{Transfer Examples using Reachability Sets}
 
 \begin{frame}[t]{Orbital Transfers via Reachability Sets}
     \begin{itemize}
@@ -362,7 +389,7 @@
     \end{itemize}
 \end{frame}
 
-\subsubsection[Circular Restricted Three Body Problem]{Three Body Problem}
+\subsubsection[CRTBP]{Circular Restricted Three Body Problem}
 
 \begin{frame}%--------------------------------------------%
 \frametitle{Three Body Problem}
@@ -377,7 +404,8 @@
         }
     
     \note[itemize]{
-        \item Introduce problem
+        \item Introduce problem and initial and terminal orbits. 
+        \item Earth is way off to the left with the Moon at the center
         \item Possible use as a communication array
         \item Might actually be a distant retrograde orbit
         }
@@ -407,12 +435,13 @@
         \item Multiple shooting to solve TPBVP
         Vary \( \theta\) to change direction on section
         Linear interpolation to determine intersection on Poincar\'e section
+        \item Only one reachabile set computation is required
         }
 \end{frame} %--------------------------------------------------%
 
 \begin{frame}{Geostationary  transfer} %----------------------------------------------------%
     \begin{itemize}
-           \item Tranfer for geostationary orbit to a periodic orbit about \( L_1\)
+           \item Transfer from geostationary orbit to a \( L_1\) periodic orbit 
            \item Multiple iterations of reachable set required for transfer
     \end{itemize}
 
@@ -428,11 +457,13 @@
        }
     \end{center}
 
+\note[itemize]{
+    \item The green trajectories are the invariant manifolds and require no control input to traverse large regions of the phase space
+}
 \end{frame} %--------------------------------------------%
 
-\subsubsection[Transfers about 4769 Castalia]{Asteroid transfers}
+\subsubsection[4769 Castalia]{Transfers about Asteroid 4769 Castalia}
 
-% Results from 2016 AAS
 \begin{frame}{Transfer Objective} %-----------------------------%
 
 \begin{itemize}
@@ -445,6 +476,9 @@
     \includegraphics[width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{figures/2016AAS/initial_transfer_3d.pdf}
 \end{center}
 
+\note[itemize]{
+    \item Now we apply the same methodology to transfers about asteroids
+}
 \end{frame}%-----------------------------%
 
 \begin{frame}{Simulation}
@@ -453,7 +487,7 @@
     \item Generate the reachability set through discretization of \( \phi_i \)
     \item Visualize \( \Sigma \in \R^4 \) through the use of two 2-D sections
     \pause
-    \item Control input allows for large deviation in velocity components
+    \item Control input allows for depature from natural dynamics
 \end{itemize}
 
 \begin{center}
@@ -461,6 +495,10 @@
     \includegraphics[width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{figures/2016AAS/poincare_zvszdot.pdf}
 \end{center}
 
+\note[itemize]{
+    \item This \( \Sigma \) is different than before because we're no longer dealing with a planar orbit
+    \item We visualize \( \R^4\) using two two-dimensional plots
+}
 \end{frame}
 
 \begin{frame}{Transfer Simulation}
@@ -478,17 +516,20 @@
 
 \begin{frame}{Complete transfer}
 \begin{itemize}
-    \item We can visualize the complete trajectory in both the body and inertial frames
+    \item We visualize the trajectory in body and inertial frames
 \end{itemize}
 
 \begin{center}
-  \animategraphics[controls,autoplay,loop,width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{30}{animation/2016AAS/body/IMG}{00001}{01499}~\hfill
-  \animategraphics[controls,autoplay,loop,width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{30}{animation/2016AAS/inertial/IMG}{00001}{01499}
+  \animategraphics[controls,autoplay,loop,width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{60}{animation/2016AAS/body/IMG}{00500}{01499}~\hfill
+  \animategraphics[controls,autoplay,loop,width=0.5\textwidth,height=0.7\textheight,keepaspectratio]{60}{animation/2016AAS/inertial/IMG}{00500}{01499}
 \end{center}
 
+\note[itemize]{
+    \item we have the body frame on the left and the inertial frame on the right
+}
 \end{frame}
 
-\subsection[Autonomous Spacecraft attitude control with obstacles]{Constrained Attitude Control}
+\subsection[Attitude Control]{Constrained Attitude Control}
 
 
 % Results from 2016 ACC
@@ -612,12 +653,10 @@
 \end{itemize}
 
 \begin{center}
-    \animategraphics[controls,autoplay,loop,width=0.5\textwidth]{8}{animation/2016ACC/multiple_avoid/multiple_avoid-}{0}{99}
+    \animategraphics[controls,autoplay,loop,width=0.5\textwidth,height=0.5\textheight,keepaspectratio]{8}{animation/2016ACC/multiple_avoid/multiple_avoid-}{0}{99}
 \end{center}
 
 \end{frame}%---------------------------------------%
-
-\subsubsection[Quadrotor attitude control]{Hardware Implementation}
 
 \begin{frame}{Hexrotor Experiment} %-----------------------------%
 \begin{itemize}
