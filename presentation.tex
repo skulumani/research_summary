@@ -1,6 +1,8 @@
 \documentclass[11pt,professionalfonts,aspectratio=169,final]{beamer}
 
-\usepackage{research_summary_packages}
+\usepackage{presentation_packages}
+\usepackage{tikz_packages}
+\tdplotsetmaincoords{60}{125} % view angle in spherical coordinates
 %\bibliography{library} % must be in the preamble when using biblatex package
 
 \DeclareSIUnit\year{yr} % 2016AAS
@@ -51,32 +53,23 @@
 \setbeamertemplate{blocks}[rounded][shadow=true]
 \setbeamertemplate{title page}[default][shadow=true,rounded=true]
 \setbeamercolor{box}{fg=black,bg=yellow}
+\setbeamertemplate{navigation symbols}{}
 \makeatother
 
-\title[Research Summary]{\large\bf  Professor Chrikjian Visit}
-
+\title[ai solutions Seminar]{Geometric Mechanics and Controls for Aerospace Systems}
+\date{18 November 2016}
 \author[Shankar Kulumani]{Shankar Kulumani}
 
-%\institute{\footnotesize
-%{\normalsize Shankar Kulumani}\vspace*{0.2cm}\\
-%  Flight Dynamics and Control Lab \\ 
-%  Dept. of Mechanical and Aerospace Engineering\\ 
-%  The George Washington University \\
-%  Washington, DC\\ \vspace{10pt}
-%  June 4, 2014 \\ \vspace{10pt}
-%  }
-\date{29 September 2016}
+
 
 \institute{
-\large{\textbf{Flight Dynamics \& Control Lab}}\\
-  \begin{figure} %figure%
-        \includegraphics[width=0.75\textwidth]{gw_txh_2cs_pos}
-    \end{figure}
+\normalsize{\textbf{Flight Dynamics \& Control Lab}}\\
+\begin{center}
+    \includegraphics[width=0.7\textwidth,height=0.2\textheight,keepaspectratio]{figures/gw_txh_2cs_pos.pdf}
+\end{center}
 }
 
 \logo{\includegraphics[scale=0.2]{figures/gw_atx_2cs_rev.pdf}}
-
-\includeonly{tex/2015AAS_motivation,tex/2016AAS,tex/2016ACC}
 
 \begin{document}
 
@@ -85,10 +78,11 @@
   \titlepage
 \end{frame}   %-----------------------------%
 
-\include{tex/2015AAS_motivation}
-\include{tex/2016AAS}
-\include{tex/2016ACC}
-
+\include{tex/airforce}
+\include{tex/introduction}
+% \include{tex/challenges}
+\include{tex/prior_work}
+\include{tex/conclusion}
 
 \end{document}
 
