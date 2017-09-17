@@ -323,13 +323,11 @@ R|(Z_1,\ldots, Z_{N_Z},z_1,\ldots z_{N_Z}) \sim \mathcal{M}(F + \sum_{i=1}^{N_Z}
 
 \begin{figure}\setcounter{subfigure}{0}
 \centerline{
-	\subcaptionbox{ Attitude estimation error ($\mathrm{deg}$) }{\hspace*{0.03\columnwidth}
-		\includegraphics[height=0.36\columnwidth]{figures/2017AAS_matrix_fisher/TAC16_0_R_est_err}\label{fig:R_est_err_0}\hspace*{0.03\columnwidth}}
-	\hfill
-	\subcaptionbox{ Uncertainty measured by $\frac{1}{s_i+s_j}$ }{\hspace*{0.03\columnwidth}
-		\includegraphics[height=0.36\columnwidth]{figures/2017AAS_matrix_fisher/TAC16_0_s}\label{fig:s_0}\hspace*{0.03\columnwidth}}
+    \subcaptionbox{ Attitude estimation error ($\mathrm{deg}$) }[0.5\textwidth]{\hspace*{0.03\columnwidth}
+		\includegraphics[height=0.6\textheight,width=0.5\textwidth,keepaspectratio]{figures/2017AAS_matrix_fisher/TAC16_0_R_est_err}\label{fig:R_est_err_0}\hspace*{0.03\columnwidth}}~
+                \subcaptionbox{ Uncertainty measured by $\frac{1}{s_i+s_j}$ }[0.5\textwidth]{
+		\includegraphics[height=0.6\textheight,width=0.5\textwidth,keepaspectratio]{figures/2017AAS_matrix_fisher/TAC16_0_s}}
 }
-\caption{first-order (red), unscented (blue)}\label{fig:ES_0}
 \end{figure}}
 
 \only<2>{
@@ -377,8 +375,7 @@ F_{3_0} = 20 \exp (\pi\hat e_1)\quad \alpha_{3_0}=\frac{1}{4}.
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{figure}\setcounter{subfigure}{0}
-\includegraphics[width=\columnwidth]{figures/2017AAS_matrix_fisher/AAS17_1_R_est_err} 
-\caption{Attitude estimation error ($\mathrm{deg}$)} \label{fig:ES_0} 
+\includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{figures/2017AAS_matrix_fisher/AAS17_1_R_est_err} 
 \end{figure}
 \end{column}
 \end{columns}
