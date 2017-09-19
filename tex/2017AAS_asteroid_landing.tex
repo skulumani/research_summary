@@ -1,6 +1,8 @@
 % !TEX root = ../presentation.tex
 
 \subsection[Asteroid Landing]{Asteroid Landing}
+\subsubsection[Coupled Dynamics]{Coupled Dynamics}
+
 \begin{frame}{Kinematics of Dumbbell}
     \begin{itemize}
         \item Dynamics derived on \SE, Special Euclidean group
@@ -40,6 +42,8 @@
         \end{align*}
     \end{itemize}
 \end{frame}
+
+\subsubsection[Geometric Control]{Geometric Control}
 
 \begin{frame}{Nonlinear Control}
     \begin{itemize}
@@ -117,6 +121,8 @@
 \end{columns}
 \end{frame}
 
+\subsubsection[Image simulation]{Image Simulation}
+
 \begin{frame}[fragile]{Blender Simulation}
     \only<1>{
     \begin{itemize}
@@ -189,7 +195,7 @@
 }
 \end{frame}
 
-\begin{frame}{Simulated imagery using Blender}
+\begin{frame}[c]{Simulated imagery using Blender}
     \begin{itemize}
         \item Free \& open-source 3D computer graphics program
         \item Offer programmatic interface through Python
@@ -201,7 +207,7 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{Monocular Localization}
+\begin{frame}[c]{Monocular Localization}
     \begin{itemize}
         \item ORB-SLAM2 - Open-source mapping and localization framework
         \item Allows for real-time monocular based SLAM
@@ -211,5 +217,5 @@
     \begin{center}
         \animategraphics[controls,autoplay,loop,width=0.5\textwidth]{8}{animation/2017AAS_asteroid_landing/mappoints/mappoints_}{1}{1452}~
         \animategraphics[controls,autoplay,loop,width=0.5\textwidth]{8}{animation/2017AAS_asteroid_landing/local_crop/local_crop_}{1}{1452}~
-\end{center}
+    \end{center}
 \end{frame}
