@@ -1,0 +1,27 @@
+sudo: false
+lanugage: generic
+matrix:
+  include:
+  - os: linux
+cache:
+  directories:
+  - "/tmp/texlive"
+  - "$HOME/.texlive"
+before_install:
+- bash ./utilities/travis_setup.sh
+- export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
+script:
+- latexmk -pdf -interaction=nonstopmode -halt-on-error dissertation.txt
+after_success:
+- bash ./utilities/deploy.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: X12Cj/B41wgLpNqHwb/gSCNuSMrTv5oSxjQm750y904iD6MdtG63lK80w/uQK70mN9h6gRo2TaeTSqGpdOe3pyCWPb+N7/MpY7vJw+ExNmJUa7WhIw17JFT5PAmpJrhIvg1PNqayqD6OeZkxUL1aJmlq+h2cbmvSb+nhvRQikWb8fjNwPwMwjyD0OwCjbTjR7NoKvQwJtezyXZ+jXTyZiU4792/N7pjqJH6ZbTjkkKU/zJwflmOTvGQmiEQV0kdJYJpRm8RVX+0lB2AazEMMVwHvjCVIcZ3PTsQd+CCm2+5E0eZeug76gxCEZ9FIIxtl1+tFNuAKZ4fQpOZ+8IjLbrX36YFQzAWbxeQPkB3qneLCkgOv1XZdzawWfMBdowGpU4EF/seCUDaFexKwGyAZ2nwhZGTiqSTx8uyQgzWQxO4B3eHbjBErw4lbAC5rq9yUS/AhbGqV4byytzlWzCQAKwWZxOkGvtVDCNLsTyijI3dL3YzzSp+PlVRNOJ1mRMHwYbw6Ovq2z1QKFUr/oxxa0LR7EAE5340dnB/kdvE+MW2svmdD4fYujT59SR6Mw+vfEbGo3WX6fPuuC1Gql3XJTGVb/ok3B7Oh3ZUtBaqRAPnlVeHVfTReRx5l5KlvzOV50fLhqMm5+mx7MRXA1g6JoD1l5MsLg5O6cHu6OQzM1kU=
+  file_glob: true
+  file: 
+    - presentation.pdf
+    - videos/*
+  skip_cleanup: true
+  on:
+    repo: skulumani/research_summary
