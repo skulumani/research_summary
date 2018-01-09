@@ -21,7 +21,6 @@ deploy:
   file_glob: true
   file: 
     - presentation.pdf
-    - videos/*
   skip_cleanup: true
   on:
     repo: skulumani/research_summary
