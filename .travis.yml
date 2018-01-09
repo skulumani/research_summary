@@ -11,7 +11,7 @@ before_install:
 - bash ./utilities/travis_setup.sh
 - export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
 script:
-- latexmk -pdf -interaction=nonstopmode -halt-on-error dissertation.txt
+- latexmk -pdf -interaction=nonstopmode -halt-on-error presentation.tex
 after_success:
 - bash ./utilities/deploy.sh
 deploy:
