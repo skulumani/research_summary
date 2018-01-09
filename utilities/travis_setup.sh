@@ -16,14 +16,14 @@ if ! command -v pdflatex > /dev/null; then
     echo "Finished install TexLive"
 fi
 
-echo "Installing thesis-gwu"
-tlmgr install thesis-gwu
-
 echo "Now updating TexLive"
 # update texlive
 tlmgr option -- autobackup 0
 tlmgr update --self --all --no-auto-install
 
 echo "Finished updating TexLive"
+
+echo "Download temxf tree"
+git clone https://github.com/skulumani/texmf.git ~/texmf
 
 
